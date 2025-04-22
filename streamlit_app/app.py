@@ -103,7 +103,7 @@ if st.session_state.generating and st.session_state.topic:
 
             # Initialize model
             # Using gemini-flash as it's faster and cheaper for this use case
-            model = genai.GenerativeModel('gemini-flash-1.5-latest')
+            model = genai.GenerativeModel('gemini-2.0-flash')
 
             # Construct prompt
             prompt = f"""
