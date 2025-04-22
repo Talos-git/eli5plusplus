@@ -96,6 +96,7 @@ css_button_row = """
         margin-right: 10px;     /* Space between buttons horizontally */
         margin-bottom: 10px;    /* Space if they wrap */
         vertical-align: top;    /* Align tops */
+        direction: ltr;        /* Ensure left-to-right flow */
     }
 
     /* Target container of the random button in the second column */
