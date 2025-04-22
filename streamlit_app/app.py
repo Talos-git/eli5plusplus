@@ -38,13 +38,15 @@ with col1:
     st.write("Explain like I'm 5") # Label for the minimum value
 
 with col2:
+    # Use markdown for the label and a tooltip icon
+    st.markdown('Select Complexity Level: <span title="0: Explain like I\'m 5, 50: High School Student, 100: Expert" style="cursor: help;">❓</span>', unsafe_allow_html=True)
     st.slider(
-        "Select Complexity Level:",
+        "", # Empty label as we provided it with markdown
         0, 100,
         key="complexity",
         value=st.session_state.complexity,
         disabled=st.session_state.generating,
-        help="0: Explain like I'm 5, 50: High School Student, 100: Expert"
+        # help parameter removed
     )
 
 with col3:
