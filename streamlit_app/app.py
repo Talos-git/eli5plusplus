@@ -27,7 +27,7 @@ def start_explanation():
     st.session_state.generating = True
     st.session_state.explanation = ""
 
-with st.form(key="topic_form", clear_on_submit=False):
+with st.form(key="topic_form", border=False, clear_on_submit=False):
     col1, col2 = st.columns([9, 1])
 
     with col1:
