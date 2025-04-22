@@ -45,8 +45,8 @@ with col2:
 
 # Complexity slider
 # Use markdown for the label and a tooltip icon
-st.markdown('''Legends: 0 = Explain like I'm five, 50 = Explain like I'm a high school student, 100 = Explain like I'm an expert in the field''')
 st.slider(
+    '''Legends: 0 = Explain like I'm five, 50 = Explain like I'm a high school student, 100 = Explain like I'm an expert in the field''', # Empty label as we provided it with markdown
     0, 100,
     key="complexity",
     value=st.session_state.complexity,
