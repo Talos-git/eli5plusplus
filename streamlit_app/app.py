@@ -12,7 +12,7 @@ st.set_page_config(page_title="ELI5++", layout="wide")
 if 'topic' not in st.session_state:
     st.session_state.topic = ""
 if 'complexity' not in st.session_state:
-    st.session_state.complexity = 1 # Default to high school level
+    st.session_state.complexity = 0 # Default to ELI5
 if 'generating' not in st.session_state:
     st.session_state.generating = False
 if 'explanation' not in st.session_state:
