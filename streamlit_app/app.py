@@ -39,7 +39,7 @@ with col1:
 
 with col2:
     # Use markdown for the label and a tooltip icon
-    st.markdown('Select Complexity Level: <span title="0: Explain like I\'m 5, 50: High School Student, 100: Expert" style="cursor: help;">?</span>', unsafe_allow_html=True)
+    st.markdown('<span title="0: Explain like I\'m 5, 50: High School Student, 100: Expert" style="cursor: help;">Select Complexity Level: ?</span>', unsafe_allow_html=True)
     st.slider(
         "", # Empty label as we provided it with markdown
         0, 100,
