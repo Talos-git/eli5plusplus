@@ -28,7 +28,7 @@ st.text_input(
     key="topic",
     value=st.session_state.topic,
     disabled=st.session_state.generating,
-    on_change=lambda: setattr(st.session_state, 'topic', st.session_state.topic) # Update session state on change
+    # Removed on_change as it conflicts with button logic
 )
 
 # Complexity slider
