@@ -34,7 +34,7 @@ st.text_input(
 # Complexity slider
 st.slider(
     "Select Complexity Level:",
-    0, 100,
+    0, 25, 50, 75, 100,
     key="complexity",
     value=st.session_state.complexity,
     disabled=st.session_state.generating,
