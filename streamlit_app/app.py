@@ -70,24 +70,65 @@ st.slider(
 
 st.write("Or choose from an example topic:")
 
-# Retrieve the randomly selected topics for this session run
-# These were selected once and stored in session state above
+# --- Inject CSS for horizontal button layout ---
+# This CSS targets the divs Streamlit creates for each button within the first column.
+# Adjust margin-right and margin-bottom for spacing.
+# Vertical-align helps align the Random button in the second column.
+css_button_row = """
+<style>
+    /* Target containers of example buttons in the first column */
+    /* This selector finds divs directly containing a button whose key starts with 'example_topic_' */
+    /* Adjust the parent selector if needed based on Streamlit version/structure */
+    div[data-testid="stVerticalBlock"] div:has(> button[key^="example_topic_"]) {
+        display: inline-block;  /* Arrange buttons like text */
+        margin-right: 10px;     /* Space between buttons horizontally */
+        margin-bottom: 10px;    /* Space if they wrap */
+        vertical-align: top;    /* Align tops */
+    }
+
+    /* Target container of the random button in the second column */
+    div[data-testid="stVerticalBlock"] div:has(> button[key="random_topic_button"]) {
+        display: inline-block;  /* Make it flow like the others */
+        vertical-align: top;    /* Align its top with the example buttons */
+        /* You might need a slight margin-top adjustment here if alignment isn't perfect */
+        /* margin-top: 1px; */ /* Example: Uncomment and adjust if needed */
+    }
+</style>
+"""
+st.markdown(css_button_row, unsafe_allow_html=True)
+
+
+# --- Use Columns for the button row structure ---
+# Adjust the ratio [8, 2] as needed for desired spacing around the random button
+col_examples, col_random = st.columns([8, 2])
+
+# Retrieve the randomly selected topics
 display_topics = st.session_state.example_topics
 
-if display_topics:
-    # Display the selected example topics
-    cols = st.columns(len(display_topics))
-    for i, topic in enumerate(display_topics):
-        cols[i].button(
-            topic,
-            key=f"example_topic_{i}", # Unique key for each button
-            disabled=st.session_state.generating,
-            on_click=lambda t=topic: select_example_topic(t), # Use lambda to pass the topic
-            args=(topic,) # Pass the topic to the callback
-        )
-else:
-    st.write("No example topics available.")
+# --- Place Example Buttons in the First Column ---
+# CSS will make them appear horizontally inline
+with col_examples:
+    if display_topics:
+        for i, topic in enumerate(display_topics):
+            st.button(
+                topic,
+                key=f"example_topic_{i}", # Unique key using index
+                disabled=st.session_state.generating,
+                on_click=select_example_topic, # Use the callback directly
+                args=(topic,) # Pass the specific topic to the callback
+            )
+    else:
+        st.write("No example topics available.") # Keep the fallback
 
+# --- Place Random Button in the Second Column ---
+# CSS attempts to vertically align it with the first row
+with col_random:
+    st.button(
+        "Random Topic",
+        key="random_topic_button",
+        disabled=st.session_state.generating,
+        on_click=select_random_topic
+    )
 # Callback function for example topic buttons
 def select_example_topic(topic):
     st.session_state.topic = topic
@@ -101,14 +142,6 @@ def select_random_topic():
     st.session_state.generating = True
     st.session_state.explanation = ""
     # Removed st.rerun() as it's a no-op in callbacks
-
-# Random Topic button
-st.button(
-    "Random Topic",
-    key="random_topic_button", # Add a unique key
-    disabled=st.session_state.generating,
-    on_click=select_random_topic
-)
 
 # Placeholder for explanation display
 explanation_placeholder = st.empty()
