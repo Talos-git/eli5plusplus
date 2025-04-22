@@ -22,6 +22,12 @@ if 'explanation' not in st.session_state:
 st.title("ELI5++")
 st.write("Get explanations for complex topics tailored to your desired complexity level.")
 
+# Callback function for Explain Topic button
+def start_explanation():
+    st.session_state.generating = True
+    st.session_state.explanation = ""
+    # No need for st.rerun() here, modifying session state will trigger it
+
 col1, col2 = st.columns([9, 1])
 
 with col1:
@@ -38,10 +44,12 @@ with col2:
     # Explain Topic button
     st.write("") # Add vertical space for alignment
     st.write("") # Add vertical space for alignment
-    if st.button("Explain Topic", key="explain_topic_button", disabled=st.session_state.generating or not st.session_state.topic):
-        st.session_state.generating = True
-        st.session_state.explanation = "" # Clear previous explanation
-        st.rerun() # Rerun to disable inputs and show spinner
+    st.button(
+        "Explain Topic",
+        key="explain_topic_button",
+        disabled=st.session_state.generating or not st.session_state.topic,
+        on_click=start_explanation
+    )
 
 # Complexity slider
 # Use markdown for the label and a tooltip icon
