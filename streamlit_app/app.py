@@ -38,7 +38,7 @@ with col2:
     # Explain Topic button
     st.write("") # Add vertical space for alignment
     st.write("") # Add vertical space for alignment
-    if st.button("Explain Topic", disabled=st.session_state.generating or not st.session_state.topic):
+    if st.button("Explain Topic", key="explain_topic_button", disabled=st.session_state.generating or not st.session_state.topic):
         st.session_state.generating = True
         st.session_state.explanation = "" # Clear previous explanation
         st.rerun() # Rerun to disable inputs and show spinner
@@ -57,15 +57,16 @@ st.slider(
 # Callback function for example topic buttons
 def select_example_topic(topic):
     st.session_state.topic = topic
-    if st.button(topic, disabled=st.session_state.generating):
-        st.session_state.generating = True
-        st.session_state.explanation = ""
-    # st.session_state.complexity = 50 # Set complexity to default for examples
+    st.session_state.generating = True
+    st.session_state.explanation = ""
+    st.rerun() # Rerun to trigger generation
 
 # Callback function for random topic button
 def select_random_topic():
     st.session_state.topic = random.choice(topics)
-    # st.session_state.complexity = 50 # Set complexity to default for random topic
+    st.session_state.generating = True
+    st.session_state.explanation = ""
+    st.rerun() # Rerun to trigger generation
 
 # Example Topics and Random Topic buttons
 st.write("Or choose from an example topic:")
@@ -75,6 +76,7 @@ cols = st.columns(len(topics))
 for i, topic in enumerate(topics):
     cols[i].button(
         topic,
+        key=topic, # Use the topic string as the unique key
         disabled=st.session_state.generating,
         on_click=select_example_topic,
         args=(topic,) # Pass the topic to the callback
@@ -83,6 +85,7 @@ for i, topic in enumerate(topics):
 # Random Topic button
 st.button(
     "Random Topic",
+    key="random_topic_button", # Add a unique key
     disabled=st.session_state.generating,
     on_click=select_random_topic
 )
