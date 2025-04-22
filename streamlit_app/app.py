@@ -22,14 +22,24 @@ if 'explanation' not in st.session_state:
 st.title("ELI5++")
 st.write("Get explanations for complex topics tailored to your desired complexity level.")
 
-# Text input for topic
-st.text_input(
-    "Enter a topic:",
-    key="topic",
-    value=st.session_state.topic,
-    disabled=st.session_state.generating,
-    # Removed on_change as it conflicts with button logic
-)
+col1, col2 = st.columns([9, 1])
+
+with col1:
+    # Text input for topic
+    st.text_input(
+        "Enter a topic:",
+        key="topic",
+        value=st.session_state.topic,
+        disabled=st.session_state.generating,
+        # Removed on_change as it conflicts with button logic
+    )
+
+with col2:
+    # Explain Topic button
+    if st.button("Explain Topic", disabled=st.session_state.generating or not st.session_state.topic):
+        st.session_state.generating = True
+        st.session_state.explanation = "" # Clear previous explanation
+        st.rerun() # Rerun to disable inputs and show spinner
 
 # Complexity slider
 # Use markdown for the label and a tooltip icon
@@ -73,11 +83,6 @@ st.button(
     on_click=select_random_topic
 )
 
-# Explain Topic button
-if st.button("Explain Topic", disabled=st.session_state.generating or not st.session_state.topic):
-    st.session_state.generating = True
-    st.session_state.explanation = "" # Clear previous explanation
-    st.rerun() # Rerun to disable inputs and show spinner
 
 # Placeholder for explanation display
 explanation_placeholder = st.empty()
