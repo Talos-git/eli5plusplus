@@ -27,28 +27,27 @@ def start_explanation():
     st.session_state.generating = True
     st.session_state.explanation = ""
 
-st.markdown("""Enter your topic and select the complexity level. You can also choose from example topics or get a random topic for explanation.""")
+with st.form(key="topic_form", clear_on_submit=False):
+    col1, col2 = st.columns([9, 1])
 
-col1, col2 = st.columns([9, 1])
+    with col1:
+        # Text input for topic
+        st.text_input(
+            "Enter a topic:",
+            key="topic",
+            value=st.session_state.topic,
+            disabled=st.session_state.generating,
+            placeholder="Type your topic and hit Enter or click 'Explain Topic'",
+            label_visibility="collapsed", # Hide the label
+        )
 
-with col1:
-    # Text input for topic
-    st.text_input(
-        "Enter a topic:",
-        key="topic",
-        value=st.session_state.topic,
-        disabled=st.session_state.generating,
-        label_visibility="collapsed", # Hide the label
-    )
-
-with col2:
-    # Explain Topic button
-    st.button(
-        "Explain Topic",
-        key="explain_topic_button",
-        disabled=st.session_state.generating or not st.session_state.topic,
-        on_click=start_explanation
-    )
+    with col2:
+        form_submit = st.form_submit_button(
+            "Explain Topic",
+            disabled=st.session_state.generating,
+            on_click=start_explanation
+        )
+        # Removed the button as we are using form_submit_button
 
 # Complexity slider
 # Use markdown for the label and a tooltip icon
