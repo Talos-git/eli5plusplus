@@ -117,15 +117,6 @@ explanation_placeholder = st.empty()
 if st.session_state.explanation:
     explanation_placeholder.markdown(st.session_state.explanation)
 
-# Function to map slider value to complexity description (not strictly needed for prompt but good for context)
-def map_complexity_value_to_description(value):
-    if value <= 25:
-        return "Explain like I'm 5"
-    elif value <= 75:
-        return "Explain like I'm a high school student"
-    else:
-        return "Explain like I'm an expert in the field"
-
 # LLM generation logic
 if st.session_state.generating and st.session_state.topic:
     with st.spinner("Generating explanation..."):
