@@ -42,8 +42,6 @@ with col1:
 
 with col2:
     # Explain Topic button
-    st.write("") # Add vertical space for alignment
-    st.write("") # Add vertical space for alignment
     st.button(
         "Explain Topic",
         key="explain_topic_button",
