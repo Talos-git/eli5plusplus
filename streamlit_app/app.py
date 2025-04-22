@@ -18,9 +18,18 @@ if 'generating' not in st.session_state:
 if 'explanation' not in st.session_state:
     st.session_state.explanation = ""
 
+if 'example_topics' not in st.session_state:
+    # Ensure there are at least 3 topics to sample from
+    num_to_sample = min(len(topics), 3)
+    if num_to_sample > 0:
+        # Sample the topics and store in session state
+        st.session_state.example_topics = random.sample(topics, num_to_sample)
+    else:
+        st.session_state.example_topics = [] # Handle empty topics case
+
 # Add main title and description
 st.title("ELI5++")
-st.write("Get explanations for complex topics tailored to your desired complexity level.")
+st.write("Enter the topic you want to learn about and choose the complexity level. I will then explain it to you at the selected complexity level. You can also choose from example topics or get a random topic.")
 
 # Callback function for Explain Topic button
 def start_explanation():
@@ -47,7 +56,6 @@ with st.form(key="topic_form", border=False, clear_on_submit=False):
             disabled=st.session_state.generating,
             on_click=start_explanation
         )
-        # Removed the button as we are using form_submit_button
 
 # Complexity slider
 # Use markdown for the label and a tooltip icon
@@ -59,6 +67,26 @@ st.slider(
     disabled=st.session_state.generating,
     # help parameter removed
 )
+
+st.write("Or choose from an example topic:")
+
+# Retrieve the randomly selected topics for this session run
+# These were selected once and stored in session state above
+display_topics = st.session_state.example_topics
+
+if display_topics:
+    # Display the selected example topics
+    cols = st.columns(len(display_topics))
+    for i, topic in enumerate(display_topics):
+        cols[i].button(
+            topic,
+            key=f"example_topic_{i}", # Unique key for each button
+            disabled=st.session_state.generating,
+            on_click=lambda t=topic: select_example_topic(t), # Use lambda to pass the topic
+            args=(topic,) # Pass the topic to the callback
+        )
+else:
+    st.write("No example topics available.")
 
 # Callback function for example topic buttons
 def select_example_topic(topic):
@@ -73,20 +101,6 @@ def select_random_topic():
     st.session_state.generating = True
     st.session_state.explanation = ""
     # Removed st.rerun() as it's a no-op in callbacks
-
-# Example Topics and Random Topic buttons
-st.write("Or choose from an example topic:")
-
-# Use columns for example topics
-cols = st.columns(len(topics))
-for i, topic in enumerate(topics):
-    cols[i].button(
-        topic,
-        key=topic, # Use the topic string as the unique key
-        disabled=st.session_state.generating,
-        on_click=select_example_topic,
-        args=(topic,) # Pass the topic to the callback
-    )
 
 # Random Topic button
 st.button(
