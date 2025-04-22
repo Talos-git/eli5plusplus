@@ -58,12 +58,16 @@ st.slider(
 # Callback function for example topic buttons
 def select_example_topic(topic):
     st.session_state.topic = topic
-    st.session_state.complexity = 50 # Set complexity to default for examples
+    if st.button(topic, disabled=st.session_state.generating):
+        st.session_state.generating = True
+        st.session_state.explanation = ""
+    # st.session_state.complexity = 50 # Set complexity to default for examples
 
 # Callback function for random topic button
 def select_random_topic():
     st.session_state.topic = random.choice(topics)
-    st.session_state.complexity = 50 # Set complexity to default for random topic
+    # st.session_state.complexity = 50 # Set complexity to default for random topic
+
 # Example Topics and Random Topic buttons
 st.write("Or choose from an example topic:")
 
