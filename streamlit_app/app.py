@@ -32,14 +32,23 @@ st.text_input(
 )
 
 # Complexity slider
-st.slider(
-    "Select Complexity Level:",
-    0, 25, 50, 75, 100,
-    key="complexity",
-    value=st.session_state.complexity,
-    disabled=st.session_state.generating,
-    help="0: Explain like I'm 5, 50: High School Student, 100: Expert"
-)
+col1, col2, col3 = st.columns([1, 8, 1]) # Create three columns with specified ratios
+
+with col1:
+    st.write("Explain like I'm 5") # Label for the minimum value
+
+with col2:
+    st.slider(
+        "Select Complexity Level:",
+        0, 100,
+        key="complexity",
+        value=st.session_state.complexity,
+        disabled=st.session_state.generating,
+        help="0: Explain like I'm 5, 50: High School Student, 100: Expert"
+    )
+
+with col3:
+    st.write("Expert") # Label for the maximum value
 
 # Callback function for example topic buttons
 def select_example_topic(topic):
