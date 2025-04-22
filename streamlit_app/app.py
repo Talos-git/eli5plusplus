@@ -70,6 +70,18 @@ st.slider(
 
 st.write("Or choose from an example topic:")
 
+# Callback function for example topic buttons
+def select_example_topic(topic):
+    st.session_state.topic = topic
+    st.session_state.generating = True
+    st.session_state.explanation = ""
+
+# Callback function for random topic button
+def select_random_topic():
+    st.session_state.topic = random.choice(topics)
+    st.session_state.generating = True
+    st.session_state.explanation = ""
+
 # --- Inject CSS for horizontal button layout ---
 # This CSS targets the divs Streamlit creates for each button within the first column.
 # Adjust margin-right and margin-bottom for spacing.
@@ -129,19 +141,6 @@ with col_random:
         disabled=st.session_state.generating,
         on_click=select_random_topic
     )
-# Callback function for example topic buttons
-def select_example_topic(topic):
-    st.session_state.topic = topic
-    st.session_state.generating = True
-    st.session_state.explanation = ""
-    # Removed st.rerun() as it's a no-op in callbacks
-
-# Callback function for random topic button
-def select_random_topic():
-    st.session_state.topic = random.choice(topics)
-    st.session_state.generating = True
-    st.session_state.explanation = ""
-    # Removed st.rerun() as it's a no-op in callbacks
 
 # Placeholder for explanation display
 explanation_placeholder = st.empty()
