@@ -59,14 +59,14 @@ def select_example_topic(topic):
     st.session_state.topic = topic
     st.session_state.generating = True
     st.session_state.explanation = ""
-    st.rerun() # Rerun to trigger generation
+    # Removed st.rerun() as it's a no-op in callbacks
 
 # Callback function for random topic button
 def select_random_topic():
     st.session_state.topic = random.choice(topics)
     st.session_state.generating = True
     st.session_state.explanation = ""
-    st.rerun() # Rerun to trigger generation
+    # Removed st.rerun() as it's a no-op in callbacks
 
 # Example Topics and Random Topic buttons
 st.write("Or choose from an example topic:")
