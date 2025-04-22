@@ -41,22 +41,35 @@ st.slider(
     help="0: Explain like I'm 5, 50: High School Student, 100: Expert"
 )
 
+# Callback function for example topic buttons
+def select_example_topic(topic):
+    st.session_state.topic = topic
+    st.session_state.complexity = 50 # Set complexity to default for examples
+
+# Callback function for random topic button
+def select_random_topic():
+    st.session_state.topic = random.choice(topics)
+    st.session_state.complexity = 50 # Set complexity to default for random topic
+
 # Example Topics and Random Topic buttons
 st.write("Or choose from an example topic:")
 
 # Use columns for example topics
 cols = st.columns(len(topics))
 for i, topic in enumerate(topics):
-    if cols[i].button(topic, disabled=st.session_state.generating):
-        st.session_state.topic = topic
-        st.session_state.complexity = 50 # Set complexity to default for examples
-        st.rerun()
+    cols[i].button(
+        topic,
+        disabled=st.session_state.generating,
+        on_click=select_example_topic,
+        args=(topic,) # Pass the topic to the callback
+    )
 
 # Random Topic button
-if st.button("Random Topic", disabled=st.session_state.generating):
-    st.session_state.topic = random.choice(topics)
-    st.session_state.complexity = 50 # Set complexity to default for random topic
-    st.rerun()
+st.button(
+    "Random Topic",
+    disabled=st.session_state.generating,
+    on_click=select_random_topic
+)
 
 # Explain Topic button
 if st.button("Explain Topic", disabled=st.session_state.generating or not st.session_state.topic):
