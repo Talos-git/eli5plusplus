@@ -26,7 +26,8 @@ st.write("Get explanations for complex topics tailored to your desired complexit
 def start_explanation():
     st.session_state.generating = True
     st.session_state.explanation = ""
-    # No need for st.rerun() here, modifying session state will trigger it
+
+st.markdown("""Enter your topic and select the complexity level. You can also choose from example topics or get a random topic for explanation.""")
 
 col1, col2 = st.columns([9, 1])
 
@@ -37,7 +38,7 @@ with col1:
         key="topic",
         value=st.session_state.topic,
         disabled=st.session_state.generating,
-        # Removed on_change as it conflicts with button logic
+        label_visibility="collapsed", # Hide the label
     )
 
 with col2:
