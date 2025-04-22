@@ -11,8 +11,8 @@ st.set_page_config(page_title="ELI5++", layout="wide")
 # Initialize Streamlit session state variables
 if 'topic' not in st.session_state:
     st.session_state.topic = ""
-#if 'complexity' not in st.session_state:
-#    st.session_state.complexity = 50 # Default to high school level
+if 'complexity' not in st.session_state:
+    st.session_state.complexity = 50 # Default to high school level
 if 'generating' not in st.session_state:
     st.session_state.generating = False
 if 'explanation' not in st.session_state:
@@ -89,7 +89,6 @@ st.button(
     disabled=st.session_state.generating,
     on_click=select_random_topic
 )
-
 
 # Placeholder for explanation display
 explanation_placeholder = st.empty()
