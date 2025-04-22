@@ -29,7 +29,7 @@ if 'example_topics' not in st.session_state:
 
 # Add main title and description
 st.title("ELI5++")
-st.write("Enter the topic you want to learn about and choose the complexity level. I will then explain it to you at the selected complexity level. You can also choose from example topics or get a random topic.")
+st.write("Enter the topic you want to learn about and choose the complexity level. I will then explain it to you at the selected level from the slider. The explanation can be anywhere between Explain Like I'm 5, Explain like I'm a high school student or Explain like I'm an expert in the field or anything in between, just choose your poison. You can also choose from example topics or get a random topic.")
 
 # Callback function for Explain Topic button
 def start_explanation():
