@@ -36,6 +36,7 @@ with col1:
 
 with col2:
     # Explain Topic button
+    st.write("") # Add vertical space for alignment
     if st.button("Explain Topic", disabled=st.session_state.generating or not st.session_state.topic):
         st.session_state.generating = True
         st.session_state.explanation = "" # Clear previous explanation
@@ -62,7 +63,6 @@ def select_example_topic(topic):
 def select_random_topic():
     st.session_state.topic = random.choice(topics)
     st.session_state.complexity = 50 # Set complexity to default for random topic
-
 # Example Topics and Random Topic buttons
 st.write("Or choose from an example topic:")
 
