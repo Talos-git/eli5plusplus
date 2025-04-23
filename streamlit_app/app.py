@@ -68,7 +68,7 @@ st.slider(
     # help parameter removed
 )
 
-st.write("Or select a random topic:")
+st.write("Or select a random topic with a click of a button:")
 
 # Callback function for random topic button
 def select_random_topic():
