@@ -154,7 +154,7 @@ with col_examples:
 # CSS attempts to vertically align it with the first row
 with col_random:
     st.button(
-        "Random Topic",
+        "Random Topic 🎲",
         key="random_topic_button",
         disabled=st.session_state.generating,
         on_click=select_random_topic
