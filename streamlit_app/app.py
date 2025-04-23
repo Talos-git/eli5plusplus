@@ -86,7 +86,7 @@ st.button(
 
 st.divider()
 
-st.write("## Response")
+st.write("### Response")
 
 # Placeholder for explanation display
 explanation_placeholder = st.empty()
