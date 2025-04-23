@@ -1,0 +1,19 @@
+[theme]
+# Set the primary background color for the main content area
+backgroundColor="#F3F4F6"  # This is Tailwind gray-100
+
+# --- Optional but Recommended ---
+
+# You might also want to adjust the secondary background color
+# (used for sidebars, code blocks, etc.) to match.
+# For example, using Tailwind gray-200 (#E5E7EB) or gray-50 (#F9FAFB)
+# secondaryBackgroundColor="#E5E7EB" # Example: gray-200
+secondaryBackgroundColor="#F9FAFB" # Example: gray-50 (often looks good with gray-100)
+
+
+# Ensure text color provides good contrast with the light background
+# Example: Using Tailwind gray-800 (#1F2937) or gray-900 (#111827)
+textColor="#1F2937"
+
+# You can optionally set a primary color for widgets too
+# primaryColor="#some_accent_color"
