@@ -2,8 +2,8 @@
 fileWatcherType = "none"
 
 [theme]
-backgroundColor="#cbd5e0"
+backgroundColor="#F3F4F6"
 
-secondaryBackgroundColor="#d1d5db" 
+secondaryBackgroundColor="#F9FAFB" # Example: gray-50 (often looks good with gray-100)
 
-textColor="#FFFFFF"
+textColor="#1F2937"
