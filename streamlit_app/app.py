@@ -28,7 +28,7 @@ if 'example_topics' not in st.session_state:
         st.session_state.example_topics = [] # Handle empty topics case
 
 # Add main title and description
-st.title("ELI5++")
+st.title("ELI5++Syahmi")
 st.write("Enter the topic you want to learn about and choose the complexity level. I will then explain it to you at the selected level from the slider. The explanation can be anywhere between Explain Like I'm 5, Explain like I'm a high school student or Explain like I'm an expert in the field or anything in between, just choose your poison. Or just choose a random topic.")
 
 # Callback function for Explain Topic button
