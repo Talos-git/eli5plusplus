@@ -31,6 +31,19 @@ if 'example_topics' not in st.session_state:
 st.title("ELI5++")
 st.write("Enter the topic you want to learn about and choose the complexity level. I will then explain it to you at the selected level from the slider. The explanation can be anywhere between Explain Like I'm 5, Explain like I'm a high school student or Explain like I'm an expert in the field or anything in between, just choose your poison. Or just choose a random topic.")
 
+mandarin = st.checkbox("Mandarin", value=False)
+
+# Complexity slider
+# Use markdown for the label and a tooltip icon
+st.slider(
+    '''Legends: 0 = Explain like I'm five, 50 = Explain like I'm a high school student, 100 = Explain like I'm an expert in the field''', # Empty label as we provided it with markdown
+    0, 100,
+    key="complexity",
+    value=st.session_state.complexity,
+    disabled=st.session_state.generating,
+    # help parameter removed
+)
+
 # Callback function for Explain Topic button
 def start_explanation():
     st.session_state.generating = True
@@ -56,17 +69,6 @@ with st.form(key="topic_form", border=False, clear_on_submit=False):
             disabled=st.session_state.generating,
             on_click=start_explanation
         )
-
-# Complexity slider
-# Use markdown for the label and a tooltip icon
-st.slider(
-    '''Legends: 0 = Explain like I'm five, 50 = Explain like I'm a high school student, 100 = Explain like I'm an expert in the field''', # Empty label as we provided it with markdown
-    0, 100,
-    key="complexity",
-    value=st.session_state.complexity,
-    disabled=st.session_state.generating,
-    # help parameter removed
-)
 
 st.write("Or select a random topic with a click of a button:")
 
@@ -106,9 +108,14 @@ if st.session_state.generating and st.session_state.topic:
             model = genai.GenerativeModel('gemini-2.0-flash')
 
             # Construct prompt
-            prompt = f"""
-            Explain the topic '{st.session_state.topic}' at a complexity level corresponding to a slider value of {st.session_state.complexity} on a scale of 0 to 100. On this scale, 0 means 'Explain like I'm 5', 50 means 'Explain like I'm a high school student', and 100 means 'Explain like I'm an expert in the field'. Provide the answer in a structured manner with header and bullet points when needed.
-            """
+            if mandarin:
+                prompt = f"""
+                用中文解释主题 '{st.session_state.topic}'，复杂度水平对应于滑块值 {st.session_state.complexity}，范围从 0 到 100。在这个范围内，0 意味着 '像我 5 岁一样解释'，50 意味着 '像高中生一样解释'，100 意味着 '像该领域的专家一样解释'。在需要时以结构化的方式提供答案，包括标题和要点。
+                """
+            else:
+                prompt = f"""
+                Explain the topic '{st.session_state.topic}' at a complexity level corresponding to a slider value of {st.session_state.complexity} on a scale of 0 to 100. On this scale, 0 means 'Explain like I'm 5', 50 means 'Explain like I'm a high school student', and 100 means 'Explain like I'm an expert in the field'. Provide the answer in a structured manner with header and bullet points when needed.
+                """
 
             # Stream response
             response = model.generate_content(prompt, stream=True)
