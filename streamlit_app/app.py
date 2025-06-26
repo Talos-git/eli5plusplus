@@ -124,9 +124,6 @@ if st.session_state.generating and st.session_state.topic:
             else:
                 st.error("Failed to retrieve GEMINI_API_KEY from Secret Manager. Please check permissions and secret ID.")
                 st.session_state.generating = False
-                st.rerun()
-                # No return here, as it's not within a function.
-                # The st.rerun() will cause the script to re-execute from the top.
 
             # Initialize model
             # Using gemini-flash as it's faster and cheaper for this use case
@@ -159,4 +156,3 @@ if st.session_state.generating and st.session_state.topic:
             explanation_placeholder.markdown(st.session_state.explanation)
         finally:
             st.session_state.generating = False
-            st.rerun() # Rerun to re-enable inputs
