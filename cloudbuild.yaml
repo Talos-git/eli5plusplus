@@ -1,0 +1,29 @@
+steps:
+# Step 1: Build the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/eli5-app:$COMMIT_SHA', '.']
+  id: Build
+
+# Step 2: Push the Docker image to Artifact Registry (recommended) or Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/eli5-app:$COMMIT_SHA']
+  id: Push
+
+# Step 3: Deploy the image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+    - 'run'
+    - 'deploy'
+    - 'eli5plusplus'
+    - '--image'
+    - 'gcr.io/$PROJECT_ID/eli5-app:$COMMIT_SHA'
+    - '--region'
+    - 'asia-southeast1'
+    - '--platform'
+    - 'managed'
+    # Optional: If your service is public, uncomment the line below
+    - '--allow-unauthenticated'
+    # Optional: If you need to set environment variables
+    # - '--set-env-vars=KEY=VALUE,ANOTHER_KEY=ANOTHER_VALUE'
+  id: DeployToCloudRun
