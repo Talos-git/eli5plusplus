@@ -138,3 +138,4 @@ if st.session_state.generating and st.session_state.topic:
             explanation_placeholder.markdown(st.session_state.explanation)
         finally:
             st.session_state.generating = False
+            st.rerun()
