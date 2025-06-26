@@ -9,7 +9,7 @@ def get_secret(secret_id, project_id=None):
     if project_id is None:
         project_id = os.environ.get("GCP_PROJECT_ID") # Or hardcode your project ID
         if not project_id:
-            st.error("GCP_PROJECT_ID environment variable not set. Please set it in your Cloud Run service.")
+            print("GCP_PROJECT_ID environment variable not set. Please set it in your Cloud Run service.")
             return None
 
     client = secretmanager.SecretManagerServiceClient()
@@ -122,7 +122,7 @@ if st.session_state.generating and st.session_state.topic:
             if api_key:
                 genai.configure(api_key=api_key)
             else:
-                st.error("Failed to retrieve GEMINI_API_KEY from Secret Manager. Please check permissions and secret ID.")
+                print("Failed to retrieve GEMINI_API_KEY from Secret Manager. Please check permissions and secret ID.")
                 st.session_state.generating = False
 
             # Initialize model
