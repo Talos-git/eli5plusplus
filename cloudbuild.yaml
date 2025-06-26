@@ -15,7 +15,7 @@ steps:
   args:
     - 'run'
     - 'deploy'
-    - 'eli5plusplus'
+    - '$$REPO_NAME'
     - '--image'
     - 'gcr.io/$PROJECT_ID/eli5-app:$COMMIT_SHA'
     - '--region'
@@ -27,3 +27,5 @@ steps:
     # Optional: If you need to set environment variables
     # - '--set-env-vars=KEY=VALUE,ANOTHER_KEY=ANOTHER_VALUE'
   id: DeployToCloudRun
+    - '--project'
+    - '$$PROJECT_ID'
