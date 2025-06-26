@@ -2,24 +2,6 @@ import streamlit as st
 import google.generativeai as genai
 import random
 import os
-from google.cloud import secretmanager # Import secretmanager
-
-# Function to get a secret from Secret Manager
-def get_secret(secret_id, project_id=None):
-    if project_id is None:
-        project_id = os.environ.get("GCP_PROJECT_ID") # Or hardcode your project ID
-        if not project_id:
-            print("GCP_PROJECT_ID environment variable not set. Please set it in your Cloud Run service.")
-            return None
-
-    client = secretmanager.SecretManagerServiceClient()
-    name = f"projects/{project_id}/secrets/{secret_id}/versions/latest"
-    try:
-        response = client.access_secret_version(request={"name": name})
-        return response.payload.data.decode("UTF-8")
-    except Exception as e:
-        st.error(f"Error accessing secret '{secret_id}': {e}")
-        return None
 
 from topics import topics
 
@@ -117,12 +99,12 @@ if st.session_state.explanation:
 if st.session_state.generating and st.session_state.topic:
     with st.spinner("Generating explanation..."):
         try:
-            # Access API key from GCP Secret Manager
-            api_key = get_secret("gemini_api_key") # Using the actual secret ID
+            # Access API key from environment variables
+            api_key = os.environ.get("GEMINI_API_KEY")
             if api_key:
                 genai.configure(api_key=api_key)
             else:
-                print("Failed to retrieve GEMINI_API_KEY from Secret Manager. Please check permissions and secret ID.")
+                st.error("GEMINI_API_KEY environment variable not set. Please set it in your Cloud Run service.")
                 st.session_state.generating = False
 
             # Initialize model
