@@ -29,3 +29,6 @@ steps:
   id: DeployToCloudRun
     - '--project'
     - '$$PROJECT_ID'
+
+options:
+  logging: CLOUD_LOGGING_ONLY # Add this line
