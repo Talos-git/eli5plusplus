@@ -2,8 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 import random
 import os
+from dotenv import load_dotenv
 
 from topics import topics
+
+load_dotenv()
 
 # Configure Streamlit page
 st.set_page_config(page_title="ELI5++", layout="wide")
